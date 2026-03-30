@@ -5,15 +5,15 @@ let operator = null;
 // numberInMemory = 3;
 // numberInScreen = 4;
 // operator = sum;
-// operate();
+// calculate();
 
-function operate() {
-  const result = operator(numberInMemory, numberInScreen);
+function calculate() {
+  const result = operate(numberInMemory, numberInScreen, operator);
   console.log("result = ", result);
   numberInMemory = result;
 }
 
-function operateWith(a, b, func) {
+function operate(a, b, func) {
   return func(a, b);
 }
 

@@ -6,7 +6,7 @@ We plan to separate the project into distinct frontend and backend so that we ca
 
 ## Roadmap
 
-- [ ] Your calculator is going to contain functions for all of the basic math operators you typically find on calculators, so start by creating functions for the following items and testing them in your browser’s console:
+- [x] Your calculator is going to contain functions for all of the basic math operators you typically find on calculators, so start by creating functions for the following items and testing them in your browser’s console:
 
   - add
   - subtract
