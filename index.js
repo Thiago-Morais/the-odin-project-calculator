@@ -1,34 +1,43 @@
-let numberInMemory = 0;
-let numberInScreen = 0;
-let operator = null;
+class Calculator {
+  numberInMemory = null;
+  numberInScreen = null;
+  operator = null;
 
-// numberInMemory = 3;
-// numberInScreen = 4;
-// operator = sum;
-// calculate();
 
-function calculate() {
-  const result = operate(numberInMemory, numberInScreen, operator);
-  console.log("result = ", result);
-  numberInMemory = result;
+
+  #calculate() {
+    const result = this.#operate(
+      this.numberInMemory,
+      this.numberInScreen,
+      this.operator,
+    );
+    console.log("result = ", result);
+  }
+
+  #operate(a, b, func) {
+    return func(a, b);
+  }
+
+  #sum(a, b) {
+    return a + b;
+  }
+
+  #subtract(a, b) {
+    return a - b;
+  }
+
+  #multiply(a, b) {
+    return a * b;
+  }
+
+  #divide(a, b) {
+    return a / b;
+  }
 }
 
-function operate(a, b, func) {
-  return func(a, b);
-}
+const calculator = new Calculator();
 
-function sum(a, b) {
-  return a + b;
-}
-
-function subtract(a, b) {
-  return a - b;
-}
-
-function multiply(a, b) {
-  return a * b;
-}
-
-function divide(a, b) {
-  return a / b;
-}
+calculator.numberInMemory = 3;
+calculator.numberInScreen = 4;
+// calculator.operator = calculator.#sum;
+// calculator.#calculate();
