@@ -5,6 +5,9 @@ class Calculator {
 
   pressNumber(number) {
     this.numberInScreen = number;
+    if (this.operator === null) {
+      this.cachedResult = null;
+    }
   }
 
   pressSum() {
