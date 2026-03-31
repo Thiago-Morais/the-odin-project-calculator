@@ -8,19 +8,19 @@ class Calculator {
   }
 
   pressSum() {
-    this.operator = this.#sum;
+    this.operator = this.sum;
     this.#afterOperatorPressed();
   }
   pressSubtract() {
-    this.operator = this.#subtract;
+    this.operator = this.subtract;
     this.#afterOperatorPressed();
   }
   pressMultiply() {
-    this.operator = this.#multiply;
+    this.operator = this.multiply;
     this.#afterOperatorPressed();
   }
   pressDivide() {
-    this.operator = this.#divide;
+    this.operator = this.divide;
     this.#afterOperatorPressed();
   }
 
@@ -28,19 +28,19 @@ class Calculator {
     this.#calculate();
   }
 
-  #sum(a, b) {
+  sum(a, b) {
     return a + b;
   }
 
-  #subtract(a, b) {
+  subtract(a, b) {
     return a - b;
   }
 
-  #multiply(a, b) {
+  multiply(a, b) {
     return a * b;
   }
 
-  #divide(a, b) {
+  divide(a, b) {
     return a / b;
   }
 
@@ -109,59 +109,122 @@ class Calculator {
   }
 }
 
-runTests();
 function runTests() {
-  let calculator = new Calculator();
-  calculator.pressSum();
-  console.log("cached should be `0`", calculator);
+  test1();
+  test2();
+  test3();
+  test4();
+  test5();
+  test6();
+  test7();
+  test8();
 
-  calculator = new Calculator();
-  calculator.pressNumber(3);
-  calculator.pressSum();
-  console.log("cached should be `3` and screen should be `null`", calculator);
+  function test1() {
+    const calculator = new Calculator();
+    calculator.pressSum();
+    const result = calculator.cachedResult === 0;
+    console.log(result, "cached should be `0`", calculator);
+  }
 
-  calculator = new Calculator();
-  calculator.pressNumber(3);
-  calculator.pressSum();
-  calculator.pressNumber(4);
-  calculator.pressSum();
-  console.log("cached should be `7` and screen should be `null`", calculator);
+  function test2() {
+    const calculator = new Calculator();
+    calculator.pressSum();
+    const result = calculator.cachedResult === 0;
+    console.log(result, "cached should be `0`", calculator);
+  }
 
-  calculator = new Calculator();
-  calculator.pressNumber(3);
-  calculator.pressSum();
-  calculator.pressSubtract();
-  console.log(
-    "cached should be `3` and operator should be `subtract`",
-    calculator,
-  );
+  function test3() {
+    const calculator = new Calculator();
+    calculator.pressNumber(3);
+    calculator.pressSum();
+    const result =
+      calculator.cachedResult === 3 && calculator.numberInScreen === null;
+    console.log(
+      result,
+      "cached should be `3` and screen should be `null`",
+      calculator,
+    );
+  }
 
-  calculator = new Calculator();
-  calculator.pressNumber(3);
-  calculator.pressSum();
-  calculator.pressNumber(4);
-  calculator.pressEquals();
-  console.log(
-    "cached should be `7`, screen should be `null`, operator should be `null`",
-    calculator,
-  );
+  function test4() {
+    const calculator = new Calculator();
+    calculator.pressNumber(3);
+    calculator.pressSum();
+    calculator.pressNumber(4);
+    calculator.pressSum();
+    const result =
+      calculator.cachedResult === 7 && calculator.numberInScreen === null;
+    console.log(
+      result,
+      "cached should be `7` and screen should be `null`",
+      calculator,
+    );
+  }
 
-  calculator = new Calculator();
-  calculator.pressNumber(3);
-  calculator.pressSum();
-  calculator.pressNumber(4);
-  calculator.pressEquals();
-  calculator.pressSum();
-  console.log(
-    "cached should be `7`, screen should be `null`, operator should be `sum`",
-    calculator,
-  );
+  function test5() {
+    const calculator = new Calculator();
+    calculator.pressNumber(3);
+    calculator.pressSum();
+    calculator.pressSubtract();
+    const result =
+      calculator.cachedResult === 3 &&
+      calculator.operator === calculator.subtract;
+    console.log(
+      result,
+      "cached should be `3` and operator should be `subtract`",
+      calculator,
+    );
+  }
 
-  calculator = new Calculator();
-  calculator.pressNumber(3);
-  calculator.pressSum();
-  calculator.pressNumber(4);
-  calculator.pressEquals();
-  calculator.pressNumber(5);
-  console.log("cached should be `null`, screen should be `5`", calculator);
+  function test6() {
+    const calculator = new Calculator();
+    calculator.pressNumber(3);
+    calculator.pressSum();
+    calculator.pressNumber(4);
+    calculator.pressEquals();
+    const result =
+      calculator.cachedResult === 7 &&
+      calculator.numberInScreen === null &&
+      calculator.operator === null;
+    console.log(
+      result,
+      "cached should be `7`, screen should be `null`, operator should be `null`",
+      calculator,
+    );
+  }
+
+  function test7() {
+    const calculator = new Calculator();
+    calculator.pressNumber(3);
+    calculator.pressSum();
+    calculator.pressNumber(4);
+    calculator.pressEquals();
+    calculator.pressSum();
+    const result =
+      calculator.cachedResult === 7 &&
+      calculator.numberInScreen === null &&
+      calculator.operator === calculator.sum;
+    console.log(
+      result,
+      "cached should be `7`, screen should be `null`, operator should be `sum`",
+      calculator,
+    );
+  }
+
+  function test8() {
+    const calculator = new Calculator();
+    calculator.pressNumber(3);
+    calculator.pressSum();
+    calculator.pressNumber(4);
+    calculator.pressEquals();
+    calculator.pressNumber(5);
+    const result =
+      calculator.cachedResult === null && calculator.numberInScreen === 5;
+    console.log(
+      result,
+      "cached should be `null`, screen should be `5`",
+      calculator,
+    );
+  }
 }
+runTests();
