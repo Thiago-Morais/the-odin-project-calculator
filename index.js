@@ -1,9 +1,11 @@
+// ====> Backend <====
 class Calculator {
   cachedResult = null;
   numberInScreen = null;
   operator = null;
 
   pressNumber(number) {
+    console.log("pressed: ", number);
     this.numberInScreen = number;
     if (this.operator === null) {
       this.cachedResult = null;
@@ -11,18 +13,22 @@ class Calculator {
   }
 
   pressSum() {
+    console.log("pressed: sum");
     this.operator = this.sum;
     this.#afterOperatorPressed();
   }
   pressSubtract() {
+    console.log("pressed: subtract");
     this.operator = this.subtract;
     this.#afterOperatorPressed();
   }
   pressMultiply() {
+    console.log("pressed: multiply");
     this.operator = this.multiply;
     this.#afterOperatorPressed();
   }
   pressDivide() {
+    console.log("pressed: divide");
     this.operator = this.divide;
     this.#afterOperatorPressed();
   }
@@ -229,5 +235,45 @@ function runTests() {
       calculator,
     );
   }
+
+  function test9() {
+    const calculator = new Calculator();
+    calculator.pressNumber(2);
+    calculator.pressSum();
+    calculator.pressNumber(3);
+    calculator.pressSum();
+    calculator.pressNumber(4);
+    calculator.pressEquals();
+    const result = calculator.numberInScreen === 9;
+    console.log(result, "screen should be `9`", calculator);
+  }
 }
 runTests();
+
+// ====> Frontend <====
+const calculator = new Calculator();
+const buttonMapping = [
+  { id: "#add", func: () => calculator.pressSum() },
+  { id: "#subtract", func: () => calculator.pressSubtract() },
+  { id: "#multiply", func: () => calculator.pressMultiply() },
+  { id: "#divide", func: () => calculator.pressDivide() },
+  { id: "#equals", func: () => calculator.pressEquals() },
+  { id: "#number-1", func: () => calculator.pressNumber(1) },
+  { id: "#number-2", func: () => calculator.pressNumber(2) },
+  { id: "#number-3", func: () => calculator.pressNumber(3) },
+  { id: "#number-4", func: () => calculator.pressNumber(4) },
+  { id: "#number-5", func: () => calculator.pressNumber(5) },
+  { id: "#number-6", func: () => calculator.pressNumber(6) },
+  { id: "#number-7", func: () => calculator.pressNumber(7) },
+  { id: "#number-8", func: () => calculator.pressNumber(8) },
+  { id: "#number-9", func: () => calculator.pressNumber(9) },
+  { id: "#number-0", func: () => calculator.pressNumber(0) },
+];
+
+buttonMapping.forEach((element) => {
+  const button = document.querySelector(element.id);
+  button.addEventListener("click", () => {
+    element.func();
+    console.log(calculator);
+  });
+});
