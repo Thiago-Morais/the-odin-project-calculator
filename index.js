@@ -1,12 +1,12 @@
 // ====> Backend <====
 class Calculator {
   cachedResult = null;
-  numberInScreen = null;
+  inputtedNumber = null;
   operator = null;
 
   pressNumber(number) {
     console.log("pressed: ", number);
-    this.numberInScreen = number;
+    this.inputtedNumber = number;
     if (this.operator === null) {
       this.cachedResult = null;
     }
@@ -34,7 +34,13 @@ class Calculator {
   }
 
   pressEquals() {
+    if (this.operator === null) {
+      console.log("no operator was pressed");
+      return;
+    }
+    console.log("pressed: equals");
     this.#calculate();
+    this.operator = null;
   }
 
   sum(a, b) {
@@ -54,7 +60,7 @@ class Calculator {
   }
 
   #afterOperatorPressed() {
-    const numberWasPressed = this.numberInScreen !== null;
+    const numberWasPressed = this.inputtedNumber !== null;
     const hasCachedResult = this.cachedResult !== null;
     if (isFirstButtonPress()) {
       this.cachedResult = 0;
@@ -62,8 +68,8 @@ class Calculator {
     }
 
     if (isFirstCalculation()) {
-      this.cachedResult = this.numberInScreen;
-      this.numberInScreen = null;
+      this.cachedResult = this.inputtedNumber;
+      this.inputtedNumber = null;
       return;
     }
 
@@ -104,13 +110,12 @@ class Calculator {
   #calculate() {
     const result = this.#operate(
       this.cachedResult,
-      this.numberInScreen,
+      this.inputtedNumber,
       this.operator,
     );
     console.log("result = ", result);
     this.cachedResult = result;
-    this.numberInScreen = null;
-    this.operator = null;
+    this.inputtedNumber = null;
   }
 
   #operate(a, b, func) {
@@ -127,6 +132,7 @@ function runTests() {
   test6();
   test7();
   test8();
+  test9();
 
   function test1() {
     const calculator = new Calculator();
@@ -147,7 +153,7 @@ function runTests() {
     calculator.pressNumber(3);
     calculator.pressSum();
     const result =
-      calculator.cachedResult === 3 && calculator.numberInScreen === null;
+      calculator.cachedResult === 3 && calculator.inputtedNumber === null;
     console.log(
       result,
       "cached should be `3` and screen should be `null`",
@@ -162,7 +168,7 @@ function runTests() {
     calculator.pressNumber(4);
     calculator.pressSum();
     const result =
-      calculator.cachedResult === 7 && calculator.numberInScreen === null;
+      calculator.cachedResult === 7 && calculator.inputtedNumber === null;
     console.log(
       result,
       "cached should be `7` and screen should be `null`",
@@ -192,12 +198,10 @@ function runTests() {
     calculator.pressNumber(4);
     calculator.pressEquals();
     const result =
-      calculator.cachedResult === 7 &&
-      calculator.numberInScreen === null &&
-      calculator.operator === null;
+      calculator.cachedResult === 7 && calculator.inputtedNumber === null;
     console.log(
       result,
-      "cached should be `7`, screen should be `null`, operator should be `null`",
+      "cached should be `7`, screen should be `null`",
       calculator,
     );
   }
@@ -211,7 +215,7 @@ function runTests() {
     calculator.pressSum();
     const result =
       calculator.cachedResult === 7 &&
-      calculator.numberInScreen === null &&
+      calculator.inputtedNumber === null &&
       calculator.operator === calculator.sum;
     console.log(
       result,
@@ -228,7 +232,7 @@ function runTests() {
     calculator.pressEquals();
     calculator.pressNumber(5);
     const result =
-      calculator.cachedResult === null && calculator.numberInScreen === 5;
+      calculator.cachedResult === null && calculator.inputtedNumber === 5;
     console.log(
       result,
       "cached should be `null`, screen should be `5`",
@@ -244,7 +248,7 @@ function runTests() {
     calculator.pressSum();
     calculator.pressNumber(4);
     calculator.pressEquals();
-    const result = calculator.numberInScreen === 9;
+    const result = calculator.cachedResult === 9;
     console.log(result, "screen should be `9`", calculator);
   }
 }
@@ -252,12 +256,14 @@ runTests();
 
 // ====> Frontend <====
 const calculator = new Calculator();
+
 const buttonMapping = [
   { id: "#add", func: () => calculator.pressSum() },
   { id: "#subtract", func: () => calculator.pressSubtract() },
   { id: "#multiply", func: () => calculator.pressMultiply() },
   { id: "#divide", func: () => calculator.pressDivide() },
   { id: "#equals", func: () => calculator.pressEquals() },
+  { id: "#number-0", func: () => calculator.pressNumber(0) },
   { id: "#number-1", func: () => calculator.pressNumber(1) },
   { id: "#number-2", func: () => calculator.pressNumber(2) },
   { id: "#number-3", func: () => calculator.pressNumber(3) },
@@ -267,13 +273,11 @@ const buttonMapping = [
   { id: "#number-7", func: () => calculator.pressNumber(7) },
   { id: "#number-8", func: () => calculator.pressNumber(8) },
   { id: "#number-9", func: () => calculator.pressNumber(9) },
-  { id: "#number-0", func: () => calculator.pressNumber(0) },
 ];
 
 buttonMapping.forEach((element) => {
   const button = document.querySelector(element.id);
   button.addEventListener("click", () => {
     element.func();
-    console.log(calculator);
   });
 });
