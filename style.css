@@ -1,0 +1,83 @@
+/* https://coolors.co/palette/780000-c1121f-fdf0d5-003049-669bbc */
+:root {
+  --button-height: 7rem;
+  --button-height: 10vw;
+  --color-a: #780000;
+  --color-b: #c1121f;
+  --color-c: #fdf0d5;
+  --color-d: #003049;
+  --color-e: #669bbc;
+  --text-color: var(--color-d);
+  --bg-color: var(--color-c);
+  --border-color: var(--color-e);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--text-color);
+}
+
+body {
+  text-align: center;
+  background-color: var(--bg-color);
+}
+
+#title {
+  margin: 1em;
+}
+
+#container * {
+  font-family: monospace;
+}
+
+#buttons-area,
+.button-line {
+  display: flex;
+}
+
+.button-line,
+button {
+  /* flex: 1 1 2em; */
+  flex: auto;
+}
+
+#visor,
+button {
+  font-size: var(--button-height);
+  line-height: 1em;
+}
+
+#container {
+  margin: 0 20vw;
+  /* background-color: khaki; */
+  /* border: solid blue; */
+  border: solid var(--border-color);
+  padding: 0.2em;
+}
+
+#visor {
+  background-color: color-mix(in srgb, white 50%, transparent);
+  text-wrap: nowrap;
+  text-align: right;
+  /* padding: 0 0.5em; */
+}
+
+#buttons-area {
+  background-color: color-mix(in srgb, cyan 50%, transparent);
+  flex-direction: column;
+  /*   margin: var(--button-height) 25%; */
+  /*   margin: 0 auto; */
+}
+
+.button-line {
+  justify-content: center;
+}
+
+button {
+  border: solid;
+  border: solid var(--border-color);
+  margin: 0.05em;
+  padding: 0em 0.25em;
+}
