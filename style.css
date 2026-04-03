@@ -1,0 +1,94 @@
+/* https://coolors.co/palette/ccd5ae-e9edc9-fefae0-faedcd-d4a373 */
+:root {
+  --button-height: 7rem;
+  --button-height: 10vw;
+  --color-a: #ccd5ae;
+  --color-b: #e9edc9;
+  --color-c: #fefae0;
+  --color-d: #faedcd;
+  --color-e: #d4a373;
+  --text-color: var(--color-e);
+  --bg-color: var(--color-c);
+  --border-color: var(--color-d);
+  --border-color: var(--color-b);
+  --visor-bg-color: var(--color-a);
+  --visor-color: var(--color-b);
+  --button-color: var(--color-b);
+  --button-color: var(--color-d);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--text-color);
+}
+
+body {
+  text-align: center;
+  background-color: var(--bg-color);
+}
+
+#title {
+  margin: 1em;
+}
+
+#container {
+  margin: 0 20vw;
+  padding: 1rem;
+  border: outset var(--border-color) 0.5em;
+}
+
+#container * {
+  font-family: monospace;
+}
+
+#visor {
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
+  text-wrap: nowrap;
+  text-align: right;
+  font-size: calc(var(--button-height) / 1.2);
+  border: inset var(--border-color);
+  background-color: var(--visor-bg-color);
+  color: hsl(from var(--visor-bg-color) h s 40);
+}
+
+#buttons-area,
+.button-line {
+  display: flex;
+  gap: 1rem;
+}
+
+.button-line,
+button {
+  flex: auto;
+}
+
+#buttons-area {
+  flex-direction: column;
+}
+
+.button-line {
+  justify-content: center;
+}
+
+#visor,
+button {
+  line-height: 1em;
+  border-radius: 0.1em;
+}
+
+button {
+  padding: 0em 0.25em;
+  font-size: var(--button-height);
+  border: solid var(--border-color);
+  background-color: var(--button-color);
+}
+button:hover {
+  background-color: color-mix(in srgb, var(--button-color) 93%, black);
+}
+button:active {
+  border-style: inset;
+  background-color: color-mix(in srgb, var(--button-color) 80%, black);
+}
