@@ -3,7 +3,7 @@ class Calculator {
   cachedResult = null;
   inputtedNumber = null;
   operator = null;
-  visor = "";
+  visorContent = "";
   onVisorUpdate = (content) => {};
 
   pressNumber(number) {
@@ -23,21 +23,25 @@ class Calculator {
     console.log("pressed: sum");
     this.operator = this.sum;
     this.#afterOperatorPressed();
+    this.#setVisor(this.cachedResult + this.#getOperatorString(this.operator));
   }
   pressSubtract() {
     console.log("pressed: subtract");
     this.operator = this.subtract;
     this.#afterOperatorPressed();
+    this.#setVisor(this.cachedResult + this.#getOperatorString(this.operator));
   }
   pressMultiply() {
     console.log("pressed: multiply");
     this.operator = this.multiply;
     this.#afterOperatorPressed();
+    this.#setVisor(this.cachedResult + this.#getOperatorString(this.operator));
   }
   pressDivide() {
     console.log("pressed: divide");
     this.operator = this.divide;
     this.#afterOperatorPressed();
+    this.#setVisor(this.cachedResult + this.#getOperatorString(this.operator));
   }
 
   pressEquals() {
@@ -48,6 +52,7 @@ class Calculator {
     console.log("pressed: equals");
     this.#calculate();
     this.operator = null;
+    this.#setVisor(this.cachedResult);
   }
 
   sum(a, b) {
@@ -67,7 +72,7 @@ class Calculator {
   }
 
   #setVisor(content) {
-    this.visor = content;
+    this.visorContent = content.toString();
     this.onVisorUpdate(content);
   }
 
@@ -116,6 +121,18 @@ class Calculator {
     }
     function isOverridingOperation() {
       return hasCachedResult && !numberWasPressed;
+    }
+  }
+
+  #getOperatorString() {
+    if (this.operator === this.sum) {
+      return "+";
+    } else if (this.operator === this.subtract) {
+      return "-";
+    } else if (this.operator === this.multiply) {
+      return "*";
+    } else if (this.operator === this.divide) {
+      return "/";
     }
   }
 
