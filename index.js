@@ -3,34 +3,45 @@ class Calculator {
   cachedResult = null;
   inputtedNumber = null;
   operator = null;
+  visorContent = "";
+  onVisorUpdate = (content) => {};
 
   pressNumber(number) {
     console.log("pressed: ", number);
-    this.inputtedNumber = number;
+    if (this.inputtedNumber === null) {
+      this.inputtedNumber = number;
+    } else {
+      this.inputtedNumber = this.inputtedNumber * 10 + number;
+    }
     if (this.operator === null) {
       this.cachedResult = null;
     }
+    this.#setVisor(this.inputtedNumber);
   }
 
   pressSum() {
     console.log("pressed: sum");
     this.operator = this.sum;
     this.#afterOperatorPressed();
+    this.#setVisor(this.cachedResult + this.#getOperatorString(this.operator));
   }
   pressSubtract() {
     console.log("pressed: subtract");
     this.operator = this.subtract;
     this.#afterOperatorPressed();
+    this.#setVisor(this.cachedResult + this.#getOperatorString(this.operator));
   }
   pressMultiply() {
     console.log("pressed: multiply");
     this.operator = this.multiply;
     this.#afterOperatorPressed();
+    this.#setVisor(this.cachedResult + this.#getOperatorString(this.operator));
   }
   pressDivide() {
     console.log("pressed: divide");
     this.operator = this.divide;
     this.#afterOperatorPressed();
+    this.#setVisor(this.cachedResult + this.#getOperatorString(this.operator));
   }
 
   pressEquals() {
@@ -41,6 +52,7 @@ class Calculator {
     console.log("pressed: equals");
     this.#calculate();
     this.operator = null;
+    this.#setVisor(this.cachedResult);
   }
 
   sum(a, b) {
@@ -57,6 +69,11 @@ class Calculator {
 
   divide(a, b) {
     return a / b;
+  }
+
+  #setVisor(content) {
+    this.visorContent = content.toString();
+    this.onVisorUpdate(content);
   }
 
   #afterOperatorPressed() {
@@ -104,6 +121,18 @@ class Calculator {
     }
     function isOverridingOperation() {
       return hasCachedResult && !numberWasPressed;
+    }
+  }
+
+  #getOperatorString() {
+    if (this.operator === this.sum) {
+      return "+";
+    } else if (this.operator === this.subtract) {
+      return "-";
+    } else if (this.operator === this.multiply) {
+      return "*";
+    } else if (this.operator === this.divide) {
+      return "/";
     }
   }
 
@@ -281,3 +310,8 @@ buttonMapping.forEach((element) => {
     element.func();
   });
 });
+
+const visor = document.querySelector("#visor");
+calculator.onVisorUpdate = (content) => {
+  visor.textContent = content;
+};
