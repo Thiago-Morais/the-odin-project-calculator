@@ -8,7 +8,11 @@ class Calculator {
 
   pressNumber(number) {
     console.log("pressed: ", number);
-    this.inputtedNumber = number;
+    if (this.inputtedNumber === null) {
+      this.inputtedNumber = number;
+    } else {
+      this.inputtedNumber = this.inputtedNumber * 10 + number;
+    }
     if (this.operator === null) {
       this.cachedResult = null;
     }
