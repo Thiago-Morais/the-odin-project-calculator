@@ -3,6 +3,8 @@ class Calculator {
   cachedResult = null;
   inputtedNumber = null;
   operator = null;
+  visor = "";
+  onVisorUpdate = (content) => {};
 
   pressNumber(number) {
     console.log("pressed: ", number);
@@ -10,6 +12,7 @@ class Calculator {
     if (this.operator === null) {
       this.cachedResult = null;
     }
+    this.#setVisor(this.inputtedNumber);
   }
 
   pressSum() {
@@ -57,6 +60,11 @@ class Calculator {
 
   divide(a, b) {
     return a / b;
+  }
+
+  #setVisor(content) {
+    this.visor = content;
+    this.onVisorUpdate(content);
   }
 
   #afterOperatorPressed() {
@@ -281,3 +289,8 @@ buttonMapping.forEach((element) => {
     element.func();
   });
 });
+
+const visor = document.querySelector("#visor");
+calculator.onVisorUpdate = (content) => {
+  visor.textContent = content;
+};
